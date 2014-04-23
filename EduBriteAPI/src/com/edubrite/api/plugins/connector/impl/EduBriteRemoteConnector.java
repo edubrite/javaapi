@@ -123,11 +123,14 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	}
 
 	
-	public String getGroupList(PagedList pagination) {
+	public String getTestCollections(String groupNamePattern, PagedList pagination) {
 		ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "listMyGroupsWithTests");
 		parameters.put("xml", String.valueOf(true));
+		if(!StringUtils.isBlankNull(groupNamePattern)){
+			parameters.put("groupName", groupNamePattern.trim());
+		}
 		if (pagination != null) {
 			parameters
 					.put("pageSize", String.valueOf(pagination.getPageSize()));
@@ -148,11 +151,14 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		}
 	}
 	
-	public String getSiteGroupList(PagedList pagination) {
+	public String getSiteGroupList(String groupNamePattern, PagedList pagination) {
 		ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "listSiteGroups");
 		parameters.put("xml", String.valueOf(true));
+		if(!StringUtils.isBlankNull(groupNamePattern)){
+			parameters.put("groupName", groupNamePattern.trim());
+		}
 		if (pagination != null) {
 			parameters.put("pageSize", String.valueOf(pagination.getPageSize()));
 			parameters.put("currPage", String.valueOf(pagination.getCurrPage()));
@@ -168,7 +174,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		}
 	}
 	
-	public boolean addGroups(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation) {
+	public boolean addRemoveGroupAndMembers(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation) {
 		ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "createGroups");
@@ -608,5 +614,112 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	public String getTestSolution(String testId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public String getUserDetails(String userName){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "profile");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("userName", userName);
+		String response = connection.invokeApi("profile.do", parameters);
+		
+		log.debug("Response = "+response);
+		if (connection.getLastError() == null
+				|| connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public String updateUserDetails(String userName, String firstName, String lastName, String email){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "updateUser");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("userName", userName);
+		parameters.put("firstName", firstName);
+		parameters.put("lastName", lastName);
+		parameters.put("email", email);
+		String response = connection.invokeApi("user.do", parameters);
+		
+		log.debug("Response = "+response);
+		if (connection.getLastError() == null
+				|| connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public String getUserList(String searchStr, String groupId, Boolean inactive, Boolean enrolled, PagedList pagination){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "searchUser");
+		parameters.put("xml", String.valueOf(true));
+		if(!StringUtils.isBlankNull(searchStr)){
+			parameters.put("userNameLike", searchStr);
+		}
+		if(!StringUtils.isBlankNull(groupId)){
+			parameters.put("groupId", groupId);
+		}
+		if(inactive != null){
+			parameters.put("inactive", String.valueOf(inactive));
+		}
+		if(enrolled != null){
+			parameters.put("activeEnrollment", String.valueOf(enrolled));
+		}
+		
+		String response = connection.invokeApi("user.do", parameters);
+		
+		log.debug("Response = "+response);
+		if (connection.getLastError() == null
+				|| connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public String deactivateUser(String userName){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "deactivateUser");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("userName", userName);
+		
+		String response = connection.invokeApi("user.do", parameters);
+		
+		log.debug("Response = "+response);
+		if (connection.getLastError() == null
+				|| connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public String activateUser(String userName){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "activateUser");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("userName", userName);
+		
+		String response = connection.invokeApi("user.do", parameters);
+		
+		log.debug("Response = "+response);
+		if (connection.getLastError() == null
+				|| connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
 	}
 }

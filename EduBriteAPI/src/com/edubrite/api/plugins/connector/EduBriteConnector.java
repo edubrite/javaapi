@@ -17,9 +17,36 @@ public interface EduBriteConnector {
 	public String getTestList(String groupId);
 	
 	public String getGroupRef(String groupId);
-	public String getGroupList(PagedList pagination);
-	public String getSiteGroupList(PagedList pagination);
-	public boolean addGroups(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation);
+	public String getTestCollections(String groupNamePattern, PagedList pagination);
+	public String getSiteGroupList(String groupNamePattern, PagedList pagination);
+	/*
+	 * Sync Groups/GroupMembers:
+	 * addMemberOperation : add | remove 
+	 * role : STUDENT
+	 * 
+	 * groupUsersMap: Map of <Group Name, List<UserInfo> >
+	 * UserInfo: userName|email|firstName lastName
+	 * 
+	 <b>Example</b>: Add users to two groups. If any user is not specified below and is existing in any group, do not remove them from the group
+	 	Map<String, List<String>> groupUsersMap = new HashMap<String, List<String>>();
+		List<String> list = new ArrayList<String>();
+		list.add("user1|user1@ee.com|Fname1 Lname1");
+		list.add("user2|user2@ee.com|Fname2 Lname2");
+		list.add("user3|user3@ee.com|Fname3 Lname3");
+		groupUsersMap.put("Grp1", list);
+		groupUsersMap.put("Grp2", list);
+		boolean result = connector.addRemoveGroupAndMembers(groupUsersMap, RolesEnum.STUDENT, "add");
+	  
+	 <b>Example</b>: Remove those users from group, which are not specified in the call. 
+	  Map<String, List<String>> groupUsersMap = new HashMap<String, List<String>>();
+		List<String> list = new ArrayList<String>();
+		list.add("user1");
+		list.add("user2");
+		groupUsersMap.put("Grp1", list);
+		boolean result = connector.addRemoveGroupAndMembers(groupUsersMap, RolesEnum.STUDENT, "remove");
+	  
+	 */
+	public boolean addRemoveGroupAndMembers(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation);
 	public boolean removeGroups(String[] groupNames);
 	
 	public String getSubscribedExamsList(PagedList pagination);
@@ -38,6 +65,11 @@ public interface EduBriteConnector {
 	public String getUsersCourseSessionList(PagedList pagination, String userName, boolean completed);
 	
 	public String enrollCourseSession(String courseSessionId); 
+	public String getUserDetails(String userName);
+	public String updateUserDetails(String userName, String firstName, String lastName, String email);
+	public String getUserList(String searchStr, String groupId, Boolean inactive, Boolean enrolled, PagedList pagination);
+	public String deactivateUser(String userName);
+	public String activateUser(String userName);
 	
 	public boolean isConnected();
 	public void shutdown();
