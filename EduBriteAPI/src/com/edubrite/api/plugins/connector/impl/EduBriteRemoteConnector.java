@@ -233,16 +233,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		parameters.put("subscriptionType", "SUBSCRIBED");
 		parameters.put("listStyle", "CBT");
 		parameters.put("showCal", String.valueOf(false));
-		if(pagination != null){
-			parameters
-					.put("pageSize", String.valueOf(pagination.getPageSize()));
-			parameters
-					.put("currPage", String.valueOf(pagination.getCurrPage()));
-			parameters
-					.put("numPages", String.valueOf(pagination.getNumPages()));
-			parameters.put("numItems", String.valueOf(pagination
-					.getNumItems()));
-		}
+		addPagination(pagination, parameters);
 		String response = connection.invokeApi("event.do", parameters);
 		log.debug("**** >> 2 -- " + response);
 		if (connection.getLastError() == null
@@ -262,16 +253,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		parameters.put("subscriptionType", "NOT_SUBSCRIBED");
 		parameters.put("listStyle", "CBT");
 		parameters.put("showCal", String.valueOf(false));
-		if(pagination != null){
-			parameters
-					.put("pageSize", String.valueOf(pagination.getPageSize()));
-			parameters
-					.put("currPage", String.valueOf(pagination.getCurrPage()));
-			parameters
-					.put("numPages", String.valueOf(pagination.getNumPages()));
-			parameters.put("numItems", String.valueOf(pagination
-					.getNumItems()));
-		}
+		addPagination(pagination, parameters);
 		String response = connection.invokeApi("event.do", parameters);
 		log.debug("**** >> 2 -- " + response);
 		if (connection.getLastError() == null
@@ -484,16 +466,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		parameters.put("dispatch", "list");
 		parameters.put("view", "ALL");
 		parameters.put("xml", String.valueOf(true));
-		if (pagination != null) {
-			parameters
-					.put("pageSize", String.valueOf(pagination.getPageSize()));
-			parameters
-					.put("currPage", String.valueOf(pagination.getCurrPage()));
-			parameters
-					.put("numPages", String.valueOf(pagination.getNumPages()));
-			parameters.put("numItems", String.valueOf(pagination
-					.getNumItems()));
-		}
+		addPagination(pagination, parameters);
 		String response = connection.invokeApi("course.do", parameters);
 		log.debug("**** >> 2 -- " + response);
 		if (connection.getLastError() == null
@@ -514,16 +487,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 			parameters.put("award", String.valueOf(completed));
 		}
 		parameters.put("xml", String.valueOf(true));
-		if (pagination != null) {
-			parameters
-					.put("pageSize", String.valueOf(pagination.getPageSize()));
-			parameters
-					.put("currPage", String.valueOf(pagination.getCurrPage()));
-			parameters
-					.put("numPages", String.valueOf(pagination.getNumPages()));
-			parameters.put("numItems", String.valueOf(pagination
-					.getNumItems()));
-		}
+		addPagination(pagination, parameters);
 		String response = connection.invokeApi("program.do", parameters);
 		log.debug("**** >> 2 -- " + response);
 		if (connection.getLastError() == null
@@ -545,6 +509,19 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 			parameters.put("viewType", "OPEN_TO_ENROLL");
 		}
 		parameters.put("xml", String.valueOf(true));
+		addPagination(pagination, parameters);
+		String response = connection.invokeApi("program.do", parameters);
+		log.debug("**** >> 2 -- " + response);
+		if (connection.getLastError() == null
+				|| connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+
+	private void addPagination(PagedList pagination,
+			Map<String, String> parameters) {
 		if (pagination != null) {
 			parameters
 					.put("pageSize", String.valueOf(pagination.getPageSize()));
@@ -554,14 +531,12 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 					.put("numPages", String.valueOf(pagination.getNumPages()));
 			parameters.put("numItems", String.valueOf(pagination
 					.getNumItems()));
-		}
-		String response = connection.invokeApi("program.do", parameters);
-		log.debug("**** >> 2 -- " + response);
-		if (connection.getLastError() == null
-				|| connection.getLastError() == CommunicationError.NO_ERROR) {
-			return response;
-		} else {
-			return null;
+			if(!StringUtils.isBlankNull(pagination.getSortColumn())){
+				parameters.put("sortColumn", String.valueOf(pagination
+					.getSortColumn()));
+				parameters.put("sortAsc", String.valueOf(pagination
+						.isSortAsc()));
+			}
 		}
 	}
 	
@@ -673,6 +648,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		if(enrolled != null){
 			parameters.put("activeEnrollment", String.valueOf(enrolled));
 		}
+		addPagination(pagination, parameters);
 		
 		String response = connection.invokeApi("user.do", parameters);
 		

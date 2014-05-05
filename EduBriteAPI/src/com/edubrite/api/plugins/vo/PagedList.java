@@ -19,6 +19,12 @@ public class PagedList {
 	@XmlAttribute(name = "pageSize")
 	protected int pageSize = 20;
 	
+	@XmlAttribute(name = "sortColumn")
+	private String sortColumn;
+	
+	@XmlAttribute(name = "sortAsc")
+	private boolean sortAsc;
+	
 	public int getNumItems() {
 		return numItems;
 	}
@@ -42,6 +48,18 @@ public class PagedList {
 	}
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+	public String getSortColumn() {
+		return sortColumn;
+	}
+	public void setSortColumn(String sortColumn) {
+		this.sortColumn = sortColumn;
+	}
+	public boolean isSortAsc() {
+		return sortAsc;
+	}
+	public void setSortAsc(boolean sortAsc) {
+		this.sortAsc = sortAsc;
 	}
 	public int getTotalPages() {
 		if(pageSize > 0){
