@@ -637,7 +637,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		parameters.put("dispatch", "searchUser");
 		parameters.put("xml", String.valueOf(true));
 		if(!StringUtils.isBlankNull(searchStr)){
-			parameters.put("userNameLike", searchStr);
+			parameters.put("search", searchStr);
 		}
 		if(!StringUtils.isBlankNull(groupId)){
 			parameters.put("groupId", groupId);
