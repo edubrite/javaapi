@@ -35,16 +35,18 @@ public class ApiCallExample {
 		System.out.println("Connected " +connector.isConnected());
 		
 		User user = new User();
-		user.setName("yourusername");
+		user.setName("mwhite");
 		PluginConfigManager.getInstance().setApplicationUser(user);
 		String response = null;
 		/*
 		PagedList pagination = new PagedList();
-		response = connector.getSiteGroupList("Group Name", pagination);
+		pagination.setPageSize(5);
+		pagination.setCurrPage(2);
+		response = connector.getSiteGroupList(null, pagination);
 		System.out.println(response);
 		
 		
-		String response = connector.getUserDetails("ab11");
+		response = connector.getUserDetails("ab11");
 		System.out.println(response);
 		
 		
@@ -52,10 +54,14 @@ public class ApiCallExample {
 		System.out.println(response);
 		
 		PagedList pagination = new PagedList();
+		pagination.setSortColumn("date");
+		pagination.setSortAsc(false);
 		pagination.setPageSize(10);
+		pagination.setNumItems(1293);
+		pagination.setCurrPage(1);
 		response = connector.getUserList(null, null, false, null, pagination);
 		System.out.println(response);
-		
+		/*
 		response = connector.deactivateUser("ab11");
 		System.out.println(response);
 		
