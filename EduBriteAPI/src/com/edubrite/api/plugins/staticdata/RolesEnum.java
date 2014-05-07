@@ -2,7 +2,8 @@ package com.edubrite.api.plugins.staticdata;
 
 public enum RolesEnum {
 	STUDENT(1, "Learner"),
-	ADMIN(2, "Administrator");
+	ADMIN(2, "Administrator"),
+	INSTRUCTOR(3, "INSTRUCTOR");
 	
 	private final int id;
 	private final String value;

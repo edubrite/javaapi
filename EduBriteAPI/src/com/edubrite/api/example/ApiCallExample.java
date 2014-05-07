@@ -39,6 +39,31 @@ public class ApiCallExample {
 		PluginConfigManager.getInstance().setApplicationUser(user);
 		String response = null;
 		/*
+		response = connector.createGroup("Template1", "771b6914-d5b2-11e3-809c-fcfcf7e38c12", "1.1", "desc...");
+		System.out.println(response);
+		
+		response = connector.getSiteGroupList("771b6914-d5b2-11e3-809c-fcfcf7e38c12", null, null);
+		System.out.println(response);
+		*/
+		
+		//response = connector.createUser("test1235", "password", "test1234@dd.com", "test1234-f", "test1234-l", RolesEnum.INSTRUCTOR);
+		/*
+		response = connector.getUserDetails("test1235");
+		Map<String, String> customProperties = new HashMap<String, String>();
+		customProperties.put("READYTALK_ACCESS_CODE", "aaaaa");
+		customProperties.put("READYTALK_PASSCODE", "xxxx");
+		customProperties.put("WEBEX_ID", "xxxx");
+		response = connector.updateUserDetails("test1235", "Jacob", "Doe", "test1234@dd.com", RolesEnum.ADMIN, customProperties);
+		*/
+		//System.out.println(response);
+		//response = connector.addUserToGroups("user1", RolesEnum.ADMIN, "165d4506-d5b3-11e3-809c-fcfcf7e38c12");
+		//response = connector.removeUserFromGroups("user1", "165d4506-d5b3-11e3-809c-fcfcf7e38c12");
+		System.out.println(response);
+		
+	//	response = connector.removeGroups(null, "11111");
+	//	System.out.println(response);
+		
+		/*
 		PagedList pagination = new PagedList();
 		pagination.setPageSize(5);
 		pagination.setCurrPage(2);
@@ -57,11 +82,11 @@ public class ApiCallExample {
 		pagination.setSortColumn("date");
 		pagination.setSortAsc(false);
 		pagination.setPageSize(10);
-		pagination.setNumItems(1293);
-		pagination.setCurrPage(1);
+		//pagination.setNumItems(1293);
+		//pagination.setCurrPage(1);
 		response = connector.getUserList(null, null, false, null, pagination);
 		System.out.println(response);
-		/*
+		
 		response = connector.deactivateUser("ab11");
 		System.out.println(response);
 		

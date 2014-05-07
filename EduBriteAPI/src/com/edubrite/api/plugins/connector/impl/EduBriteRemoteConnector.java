@@ -151,11 +151,14 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		}
 	}
 	
-	public String getSiteGroupList(String groupNamePattern, PagedList pagination) {
+	public String getSiteGroupList(String parentId, String groupNamePattern, PagedList pagination) {
 		ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "listSiteGroups");
 		parameters.put("xml", String.valueOf(true));
+		if(!StringUtils.isBlankNull(parentId)){
+			parameters.put("parentId", parentId);
+		}
 		if(!StringUtils.isBlankNull(groupNamePattern)){
 			parameters.put("groupName", groupNamePattern.trim());
 		}
@@ -174,7 +177,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		}
 	}
 	
-	public boolean addRemoveGroupAndMembers(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation) {
+	public String addRemoveGroupAndMembers(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation) {
 		ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "createGroups");
@@ -192,35 +195,162 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 			parameters.put("groupName" + i, paramValue);
 			i++;
 		}
-		connection.invokeApi("group.do", parameters);
+		String response = connection.invokeApi("group.do", parameters);
 		
 		logDebug("Error=" + connection.getLastError());
 		
 		if (connection.getLastError() == null || connection.getLastError() == CommunicationError.NO_ERROR) {
-			return true;
+			return response;
 		} else {
-			return false;
+			return null;
 		}
 	}
 	
-	public boolean removeGroups(String[] groupNames) {
+	public String createGroup(String templateName, String parentId, String groupName, String description){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "createGroupAPI");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("templateName", templateName);
+		if(!StringUtils.isBlankNull(parentId)){
+			parameters.put("parentId", parentId);
+		}
+		parameters.put("groupName", groupName);
+		parameters.put("description", description);
+		
+		String response = connection.invokeApi("group.do", parameters);
+		
+		logDebug("Error=" + connection.getLastError());
+		
+		if (connection.getLastError() == null || connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	public String createUser(String userName, String password, String email, String firstName, String lastName, RolesEnum siteRole){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "createUserAPI");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("userName", userName);
+		parameters.put("email", email);
+		
+		if(!StringUtils.isBlankNull(password)){
+			parameters.put("parentId", password);
+		}
+		
+		parameters.put("firstName", firstName);
+		parameters.put("lastName", lastName);
+		parameters.put("siteRole", siteRole.name());
+		
+		String response = connection.invokeApi("user.do", parameters);
+		
+		logDebug("Error=" + connection.getLastError());
+		
+		if (connection.getLastError() == null || connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	public String addUserToGroups(String userName, RolesEnum groupRole, String... groupIds){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "addUserToGroups");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("userName", userName);
+		parameters.put("groupRole", groupRole.name());
+		StringBuilder groupIdsStr = new StringBuilder();
+		for(String id: groupIds){
+			if(groupIdsStr.length() > 0){
+				groupIdsStr.append(",");
+			}
+			groupIdsStr.append(id);
+		}
+		parameters.put("groupId", groupIdsStr.toString());
+		
+		String response = connection.invokeApi("groupUser.do", parameters);
+		
+		logDebug("Error=" + connection.getLastError());
+		
+		if (connection.getLastError() == null || connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	public String removeUserFromGroups(String userName, String... groupIds){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "removeUserFromGroups");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("userName", userName);
+		StringBuilder groupIdsStr = new StringBuilder();
+		for(String id: groupIds){
+			if(groupIdsStr.length() > 0){
+				groupIdsStr.append(",");
+			}
+			groupIdsStr.append(id);
+		}
+		parameters.put("groupId", groupIdsStr.toString());
+		
+		String response = connection.invokeApi("groupUser.do", parameters);
+		
+		logDebug("Error=" + connection.getLastError());
+		
+		if (connection.getLastError() == null || connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	public String removeGroupsByIds(String... groupIds){
+		ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "deleteGroupsByIds");
+		parameters.put("xml", String.valueOf(true));
+		
+		int i = 0;
+		for (String groupId : groupIds) {
+			parameters.put("groupId" + i, groupId);
+			i++;
+		}
+		String response = connection.invokeApi("group.do", parameters);
+		
+		logDebug("Error=" + connection.getLastError());
+		
+		if (connection.getLastError() == null || connection.getLastError() == CommunicationError.NO_ERROR) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	public String removeGroups(String parentId, String... groupNames) {
 		ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "deleteGroups");
 		parameters.put("xml", String.valueOf(true));
+		if(parentId != null){
+			parameters.put("parentId", parentId);
+		}
 		int i = 0;
 		for (String groupName : groupNames) {
 			parameters.put("groupName" + i, groupName);
 			i++;
 		}
-		connection.invokeApi("group.do", parameters);
+		String response = connection.invokeApi("group.do", parameters);
 		
 		logDebug("Error=" + connection.getLastError());
 		
 		if (connection.getLastError() == null || connection.getLastError() == CommunicationError.NO_ERROR) {
-			return true;
+			return response;
 		} else {
-			return false;
+			return null;
 		}
 	}
 
@@ -610,7 +740,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	}
 	
 	@Override
-	public String updateUserDetails(String userName, String firstName, String lastName, String email){
+	public String updateUserDetails(String userName, String firstName, String lastName, String email, RolesEnum siteRole, Map<String, String> customProperties){
 		ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "updateUser");
@@ -619,6 +749,12 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		parameters.put("firstName", firstName);
 		parameters.put("lastName", lastName);
 		parameters.put("email", email);
+		parameters.put("siteRole", siteRole.name());
+		if(customProperties != null && !customProperties.isEmpty()){
+			for(Map.Entry<String, String> entry : customProperties.entrySet()){
+				parameters.put("customUpdPropMap['"+entry.getKey()+"']", entry.getValue());
+			}
+		}
 		String response = connection.invokeApi("user.do", parameters);
 		
 		log.debug("Response = "+response);

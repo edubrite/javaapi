@@ -12,13 +12,25 @@ public interface EduBriteConnector {
 	public boolean connect();
 	public void disconnect();
 	public void reset();
-	public String getTest(String testId);
-	public String getTestInstance(String testInstanceId);
-	public String getTestList(String groupId);
-	
+	/*
+	 * Admin functions, to be called as site admin user
+	 */
+	public String getSiteGroupList(String parentId, String groupNamePattern, PagedList pagination);
+	public String createGroup(String templateName, String parentId, String groupName, String description);
 	public String getGroupRef(String groupId);
-	public String getTestCollections(String groupNamePattern, PagedList pagination);
-	public String getSiteGroupList(String groupNamePattern, PagedList pagination);
+	public String removeGroupsByIds(String... groupIds);
+	public String removeGroups(String parentId, String... groupNames);
+	
+	public String getUserList(String searchStr, String groupId, Boolean inactive, Boolean enrolled, PagedList pagination);
+	public String createUser(String userName, String password, String email, String firstName, String lastName, RolesEnum siteRole);
+	public String getUserDetails(String userName);
+	public String updateUserDetails(String userName, String firstName, String lastName, String email, RolesEnum siteRole, Map<String, String> customProperties);
+	public String addUserToGroups(String userName, RolesEnum groupRole, String... groupIds);
+	public String removeUserFromGroups(String userName, String... groupIds);
+	public String deactivateUser(String userName);
+	public String activateUser(String userName);
+	
+	
 	/*
 	 * Sync Groups/GroupMembers:
 	 * addMemberOperation : add | remove 
@@ -46,12 +58,20 @@ public interface EduBriteConnector {
 		boolean result = connector.addRemoveGroupAndMembers(groupUsersMap, RolesEnum.STUDENT, "remove");
 	  
 	 */
-	public boolean addRemoveGroupAndMembers(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation);
-	public boolean removeGroups(String[] groupNames);
+	public String addRemoveGroupAndMembers(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation);
+	
+	/*
+	 * Learner's functions
+	 */
+	public String getTest(String testId);
+	public String getTestInstance(String testInstanceId);
+	public String getTestList(String groupId);
+	public String getTestCollections(String groupNamePattern, PagedList pagination);
 	
 	public String getSubscribedExamsList(PagedList pagination);
 	public String getNotSubscribedExamsList(PagedList pagination);
 	public String subscribe(String eventId); 
+	
 	public String getTestInstanceList(PagedList pagination);
 	public String getTestInstanceList(PagedList pagination, String userName);
 	public String getTestSolution(String testId);
@@ -65,11 +85,6 @@ public interface EduBriteConnector {
 	public String getUsersCourseSessionList(PagedList pagination, String userName, boolean completed);
 	
 	public String enrollCourseSession(String courseSessionId); 
-	public String getUserDetails(String userName);
-	public String updateUserDetails(String userName, String firstName, String lastName, String email);
-	public String getUserList(String searchStr, String groupId, Boolean inactive, Boolean enrolled, PagedList pagination);
-	public String deactivateUser(String userName);
-	public String activateUser(String userName);
 	
 	public boolean isConnected();
 	public void shutdown();
