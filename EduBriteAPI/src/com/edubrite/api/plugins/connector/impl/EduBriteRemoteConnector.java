@@ -19,7 +19,7 @@ import com.edubrite.api.plugins.vo.PagedList;
 
 public class EduBriteRemoteConnector implements EduBriteConnector {
 	private static final Logger log = Logger.getLogger(EduBriteRemoteConnector.class.getName());
-	private EduBriteConnection connection;
+	protected EduBriteConnection connection;
 	private static final int PAGE_SIZE = 20;
 
 	public EduBriteRemoteConnector() {
@@ -66,7 +66,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		return connection.isConnected();
 	}
 
-	private void ensureConnection() {
+	protected void ensureConnection() {
 		getConnection();
 		if (!connection.isConnected()) {
 			connect();
@@ -699,7 +699,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		return Pair.of(error.getCode(), error.name());
 	}
 	
-	private void logDebug(String s){
+	protected void logDebug(String s){
 		System.out.println(s);
 	}
 
