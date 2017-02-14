@@ -4,6 +4,14 @@ public class User {
 	String name;
 	String fullName;
 	String email;
+	
+	public User() {
+	}
+	
+	public User(String name){
+		this.name = name;
+	}
+	
 	public String getName() {
 		return name;
 	}
