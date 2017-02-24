@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import com.edubrite.api.plugins.common.Pair;
 import com.edubrite.api.plugins.common.PluginConfig;
 import com.edubrite.api.plugins.common.PluginConfigManager;
+import com.edubrite.api.plugins.common.StringUtils;
 import com.edubrite.api.plugins.connector.CommunicationError;
 import com.edubrite.api.plugins.connector.EduBriteConnection;
 import com.edubrite.api.plugins.connector.EduBriteConnector;
@@ -123,7 +124,13 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	 * @return response string
 	 */
 	public String invokeApi(String api, Map<String, String> parameters) {
-		return connection.invokeApi(api, parameters);
+		String response = connection.invokeApi(api, parameters);
+		if(!StringUtils.isBlankNull(response)){
+			response = response.replaceAll("\r+", "");
+			response = response.replaceAll("\n\t\n", "");
+			response = response.replaceAll("\n+", "\n");
+		}
+		return response;
 	}
 
 	/**
