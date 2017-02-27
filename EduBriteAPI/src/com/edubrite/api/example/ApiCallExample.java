@@ -14,6 +14,7 @@ import com.edubrite.api.plugins.common.PluginConfig;
 import com.edubrite.api.plugins.common.PluginConfigManager;
 import com.edubrite.api.plugins.connector.EduBriteConnector;
 import com.edubrite.api.plugins.connector.EduBriteConnectorFactory;
+import com.edubrite.api.plugins.staticdata.ResponseType;
 import com.edubrite.api.plugins.staticdata.RolesEnum;
 import com.edubrite.api.plugins.vo.User;
 
@@ -31,15 +32,20 @@ public class ApiCallExample {
 		EduBriteConnector connector = EduBriteConnectorFactory.getInstance().getConnector();
 		connector.connect();
 		
-		System.out.println("Connected " +connector.isConnected());
-		PluginConfigManager.getInstance().setApplicationUser(new User("<userName>"));
+		System.out.println("Connected " +connector.isConnected() + "\n");
+		PluginConfigManager.getInstance().setApplicationUser(new User("<username>"));
+		
+		//For xml response
+		//connector.setResponseType(ResponseType.XML);
+		//For json response
+		//connector.setResponseType(ResponseType.JSON);
 		
 		String response = null;
 		
 		//user svc
 		//response = connector.userSvc().create("<username>", "<password>", "<email>", "<firstname>", "<lastname>");
-		//response = connector.userSvc().list(null, null, null, null, null);
-		//response = connector.userSvc().get("<username>");
+		response = connector.userSvc().list(null, null, null, null, null);
+		//response = connector.userSvc().get(""<username>"");
 		//response = connector.userSvc().addToGroups("<username>", "<userrole>", "<groupid>", "[groupid...]");
 		//response = connector.userSvc().removeFromGroups("<username>", "<groupid>", "[groupid...]");
 		//response = connector.userSvc().deactivate("<username>");
@@ -84,6 +90,7 @@ public class ApiCallExample {
 		System.out.println(response);
 		
 		/*
+		//Pagination sample
 		PagedList pagination = new PagedList();
 		pagination.setPageSize(5);
 		pagination.setCurrPage(2);
