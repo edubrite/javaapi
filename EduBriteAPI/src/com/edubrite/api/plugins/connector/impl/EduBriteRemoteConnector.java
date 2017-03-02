@@ -13,10 +13,12 @@ import com.edubrite.api.plugins.connector.EduBriteConnection;
 import com.edubrite.api.plugins.connector.EduBriteConnector;
 import com.edubrite.api.plugins.service.CourseApiService;
 import com.edubrite.api.plugins.service.GroupApiService;
+import com.edubrite.api.plugins.service.ReportApiService;
 import com.edubrite.api.plugins.service.TestApiService;
 import com.edubrite.api.plugins.service.UserApiService;
 import com.edubrite.api.plugins.service.impl.CourseApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.GroupApiServiceImpl;
+import com.edubrite.api.plugins.service.impl.ReportApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.TestApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.UserApiServiceImpl;
 import com.edubrite.api.plugins.staticdata.ResponseType;
@@ -168,5 +170,13 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	@Override
 	public CourseApiService courseSvc() {
 		return new CourseApiServiceImpl(this);
+	}
+	
+	/**
+	 * Report specific services
+	 */
+	@Override
+	public ReportApiService reportSvc() {
+		return new ReportApiServiceImpl(this);
 	}
 }

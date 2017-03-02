@@ -33,6 +33,7 @@ public class GroupApiServiceImpl extends AbstractApiService implements GroupApiS
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "getGroupRef");
 		parameters.put("id", groupId);
+		parameters.put("xml", String.valueOf(true));
 		String response = connector.invokeApi("group.do", parameters);
 		log.debug("Response=" + response);
 		if (!connector.hasError()) {

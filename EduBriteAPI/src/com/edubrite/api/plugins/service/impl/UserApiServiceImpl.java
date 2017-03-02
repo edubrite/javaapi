@@ -33,10 +33,13 @@ public class UserApiServiceImpl extends AbstractApiService implements UserApiSer
 	 *            last name for the new user
 	 * @param siteRole
 	 *            role for the new user in the site
+	 * @param customProperties
+	 *            custom properties map
 	 * @return response string
 	 */
 	@Override
-	public String create(String userName, String password, String email, String firstName, String lastName) {
+	public String create(String userName, String password, String email, String firstName, String lastName, 
+			Map<String, String> customProperties) {
 		connector.ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
 		parameters.put("dispatch", "create");
@@ -48,6 +51,12 @@ public class UserApiServiceImpl extends AbstractApiService implements UserApiSer
 			parameters.put("parentId", password);
 		}
 
+		if (customProperties != null && !customProperties.isEmpty()) {
+			for (Map.Entry<String, String> entry : customProperties.entrySet()) {
+				parameters.put("customUpdPropMap['" + entry.getKey() + "']", entry.getValue());
+			}
+		}
+		
 		parameters.put("firstName", firstName);
 		parameters.put("lastName", lastName);
 		String response = connector.invokeApi("userService.do", parameters);

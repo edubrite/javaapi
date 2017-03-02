@@ -1,5 +1,6 @@
 package com.edubrite.api.plugins.connector.impl;
 
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.security.Key;
 import java.util.ArrayList;
@@ -7,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.commons.httpclient.Cookie;
 import org.apache.commons.httpclient.HttpClient;
@@ -18,6 +22,7 @@ import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
 
 import com.edubrite.api.plugins.common.OltPublicKey;
 import com.edubrite.api.plugins.common.OltSymmetricKeyHandler;
@@ -422,7 +427,35 @@ public class EduBriteHttpConnection implements EduBriteConnection {
 				method.setRequestBody( nvpList.toArray(new NameValuePair[nvpList.size()]) );
 			}
 			int code = client.executeMethod(method);
+			boolean errorFlag = true;
 			if (code == 200) {
+				/*
+				 * if HTTP request was successful and the business action successfully 
+				 * completed.
+				 */
+				errorFlag = false;
+			}else{
+				/*
+				 * To check this condition :
+				 * if HTTP request was successful but the business action request failed, 
+				 * because in that case, code will not be 200 and the response should 
+				 * be xml. 
+				 * And if HTTP request failed, then the response will not be api 
+				 * response xml.
+				 */
+				String response = method.getResponseBodyAsString();
+				if (response != null) {
+					//check if the root node of the response is "response"
+					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+					Document doc = dBuilder.parse(new ByteArrayInputStream(response.getBytes()));
+					doc.getDocumentElement().normalize();
+					if ("response".equalsIgnoreCase(doc.getDocumentElement().getNodeName())) {
+						errorFlag = false;
+					}
+				}
+			}	
+			if(!errorFlag){
 				error.set(CommunicationError.NO_ERROR);
 				exception.set(null);
 				apiResponseStr = method.getResponseBodyAsString();
