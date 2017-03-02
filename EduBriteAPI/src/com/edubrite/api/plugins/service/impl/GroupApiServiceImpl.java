@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import com.edubrite.api.plugins.common.StringUtils;
 import com.edubrite.api.plugins.connector.impl.EduBriteRemoteConnector;
 import com.edubrite.api.plugins.service.GroupApiService;
+import com.edubrite.api.plugins.staticdata.GroupMembershipTypeEnum;
 import com.edubrite.api.plugins.staticdata.RolesEnum;
 import com.edubrite.api.plugins.vo.PagedList;
 
@@ -248,5 +249,64 @@ public class GroupApiServiceImpl extends AbstractApiService implements GroupApiS
 			return null;
 		}
 	}
+	
+	/**
+	 * Updated group details
+	 * @param groupId id of the group to update
+	 * @param groupName new/updated name 
+	 * @param domain new/updated domain
+	 * @param description new/updated description
+	 * @param customProperties new/updated custom properties
+	 * @return response string
+	 */
+	public String update(String groupId, String groupName, String domain, String description,
+			Map<String, String> customProperties){
+		connector.ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "updateGroup");
+		parameters.put("xml", String.valueOf(true));
+		parameters.put("id", groupId);
+		parameters.put("groupName", groupName);
+		parameters.put("domain", domain);
+		parameters.put("description", description);
+		if (customProperties != null && !customProperties.isEmpty()) {
+			for (Map.Entry<String, String> entry : customProperties.entrySet()) {
+				parameters.put("customUpdPropMap['" + entry.getKey() + "']", entry.getValue());
+			}
+		}
+		
+		String response = connector.invokeApi("groupService.do", parameters);
+		if (!connector.hasError()) {
+			return response;
+		} else {
+			return null;
+		}
+	}
 
+	/**
+	 * 
+	 * @param groupId
+	 * @param parentId
+	 * @param removeNonExclusive
+	 * @return response string
+	 */
+	public String changeParentGroup(String groupId, String parentId, Boolean removeNonExclusive){
+		connector.ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "changeParentGroup");
+		parameters.put("xml", String.valueOf(true));
+		
+		parameters.put("id", groupId);
+		parameters.put("parentId", parentId);
+		if(removeNonExclusive!=null){
+			parameters.put("removeNonExclusive", String.valueOf(removeNonExclusive));
+		}
+		String response = connector.invokeApi("groupService.do", parameters);
+		if (!connector.hasError()) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
 }

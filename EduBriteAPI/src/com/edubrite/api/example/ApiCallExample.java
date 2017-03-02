@@ -71,6 +71,9 @@ public class ApiCallExample {
 		//response = connector.groupSvc().removeByIds(null, "<groupid>");
 		//response = connector.groupSvc().removeByNames(null, "<groupname>");
 		
+		//response = connector.groupSvc().updateGroup("<groupid>", "<groupname>", "<domain>", "<desc>" ,"<customProperties>");
+		//response = connector.groupSvc().changeParentGroup("<groupid>", "<parentId>", "<removeNonExclusive>");
+		
 		//Map<String, List<String>> groupUsersMap = new HashMap<String, List<String>>();
 		//List<String> list = new ArrayList<String>();
 		//list.add("user1|user1@ee.com|Fname1 Lname1");
