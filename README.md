@@ -2,6 +2,7 @@
 <p align="center">
 <img src="https://www.edubrite.com/oltpublish/static/assets/eb-img/eb-new-logo.png" width="256">
 </p>
+
 javaapi
 =======
 
@@ -179,7 +180,20 @@ API Mapping
 </td>
 </tr>
 
+<tr>
+<td>
+<b>ReportApiService</b>
+<br/><i>[connector.reportSvc()]</i>
+</td>
+<td>
+<ul>
+<li>listProgramMembers</li>
+<li>listCourseSessionMembers</li>
+</ul>		
+</td>
+</tr>
 </table>
+
 
 -----
 All source - copyright - EduBrite Systems Inc.
