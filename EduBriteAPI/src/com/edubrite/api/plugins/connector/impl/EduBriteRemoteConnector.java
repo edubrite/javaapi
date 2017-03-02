@@ -1,3 +1,4 @@
+
 package com.edubrite.api.plugins.connector.impl;
 
 import java.util.Map;
@@ -7,23 +8,27 @@ import org.apache.log4j.Logger;
 import com.edubrite.api.plugins.common.Pair;
 import com.edubrite.api.plugins.common.PluginConfig;
 import com.edubrite.api.plugins.common.PluginConfigManager;
-import com.edubrite.api.plugins.common.StringUtils;
+import com.edubrite.api.plugins.common.ResponseParser;
 import com.edubrite.api.plugins.connector.CommunicationError;
 import com.edubrite.api.plugins.connector.EduBriteConnection;
 import com.edubrite.api.plugins.connector.EduBriteConnector;
 import com.edubrite.api.plugins.service.CourseApiService;
 import com.edubrite.api.plugins.service.GroupApiService;
+import com.edubrite.api.plugins.service.ReportApiService;
 import com.edubrite.api.plugins.service.TestApiService;
 import com.edubrite.api.plugins.service.UserApiService;
 import com.edubrite.api.plugins.service.impl.CourseApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.GroupApiServiceImpl;
+import com.edubrite.api.plugins.service.impl.ReportApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.TestApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.UserApiServiceImpl;
+import com.edubrite.api.plugins.staticdata.ResponseType;
 
 public class EduBriteRemoteConnector implements EduBriteConnector {
 	private static final Logger log = Logger.getLogger(EduBriteRemoteConnector.class.getName());
 	private EduBriteConnection connection;
-
+	private ResponseType responseType = ResponseType.XML;
+	
 	private EduBriteConnection getConnection() {
 		if (connection == null) {
 			PluginConfig config = PluginConfigManager.getConfig();
@@ -116,6 +121,14 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 		log.debug("Error=" + connection.getLastError());
 		return connection.getLastError() != null && connection.getLastError() != CommunicationError.NO_ERROR;
 	}
+	
+	public ResponseType getResponseType() {
+		return responseType;
+	}
+	
+	public void setResponseType(ResponseType responseType) {
+		this.responseType = responseType;
+	}
 
 	/**
 	 * Invokes given api with the request parameters provided
@@ -125,12 +138,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	 */
 	public String invokeApi(String api, Map<String, String> parameters) {
 		String response = connection.invokeApi(api, parameters);
-		if(!StringUtils.isBlankNull(response)){
-			response = response.replaceAll("\r+", "");
-			response = response.replaceAll("\n\t\n", "");
-			response = response.replaceAll("\n+", "\n");
-		}
-		return response;
+		return ResponseParser.parseResponseByType(getResponseType(), response);
 	}
 
 	/**
@@ -163,5 +171,13 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	@Override
 	public CourseApiService courseSvc() {
 		return new CourseApiServiceImpl(this);
+	}
+	
+	/**
+	 * Report specific services
+	 */
+	@Override
+	public ReportApiService reportSvc() {
+		return new ReportApiServiceImpl(this);
 	}
 }

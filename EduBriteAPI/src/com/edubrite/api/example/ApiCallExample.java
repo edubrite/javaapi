@@ -2,6 +2,8 @@ package com.edubrite.api.example;
 
 import java.security.Key;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,8 @@ import com.edubrite.api.plugins.common.PluginConfig;
 import com.edubrite.api.plugins.common.PluginConfigManager;
 import com.edubrite.api.plugins.connector.EduBriteConnector;
 import com.edubrite.api.plugins.connector.EduBriteConnectorFactory;
+import com.edubrite.api.plugins.staticdata.ProgramStatus;
+import com.edubrite.api.plugins.staticdata.ResponseType;
 import com.edubrite.api.plugins.staticdata.RolesEnum;
 import com.edubrite.api.plugins.vo.User;
 
@@ -31,28 +35,32 @@ public class ApiCallExample {
 		EduBriteConnector connector = EduBriteConnectorFactory.getInstance().getConnector();
 		connector.connect();
 		
-		System.out.println("Connected " +connector.isConnected());
-		PluginConfigManager.getInstance().setApplicationUser(new User("<userName>"));
+		System.out.println("Connected " +connector.isConnected() + "\n");
+		PluginConfigManager.getInstance().setApplicationUser(new User("<username>"));
+		
+		//For xml response
+		//connector.setResponseType(ResponseType.XML);
+		//For json response
+		//connector.setResponseType(ResponseType.JSON);
 		
 		String response = null;
 		
 		//user svc
-		//response = connector.userSvc().create("<username>", "<password>", "<email>", "<firstname>", "<lastname>");
-		//response = connector.userSvc().list(null, null, null, null, null);
+		//response = connector.userSvc().list("<searchStr>", "<groupId>", "<inactive>", "<enrolled>", "<pagination>");
 		//response = connector.userSvc().get("<username>");
 		//response = connector.userSvc().addToGroups("<username>", "<userrole>", "<groupid>", "[groupid...]");
 		//response = connector.userSvc().removeFromGroups("<username>", "<groupid>", "[groupid...]");
 		//response = connector.userSvc().deactivate("<username>");
 		//response = connector.userSvc().activate("<username>");
 		//response = connector.userSvc().getSession();
-		//response = connector.userSvc().update("<userName>", "<newfirstName>", "<newlastName>", "<newemail>", "<siteRole>", "<customProperties>");
-		
+
 		//Map<String, String> customProperties = new HashMap<String, String>();
-		//customProperties.put("READYTALK_ACCESS_CODE", "aaaaa");
-		//customProperties.put("READYTALK_PASSCODE", "xxxx");
-		//customProperties.put("WEBEX_ID", "xxxx");
-		//response = connector.userSvc().update("john", "Jacob", "Doe", "test1234@dd.com", RolesEnum.ADMIN, customProperties);
+		//customProperties.put("CUSTOM_PROP_1", "VALUE_1");
+		//customProperties.put("CUSTOM_PROP_2", "VALUE_2");
+		//customProperties.put("CUSTOM_PROP_3", "VALUE_3");
 		
+		//response = connector.userSvc().create("<username>", "<password>", "<email>", "<firstname>", "<lastname>", <customProperties>);
+		//response = connector.userSvc().update("<userName>", "<newfirstName>", "<newlastName>", "<newemail>", "<siteRole>", "<customProperties>");
 		
 		
 		//group svc
@@ -62,6 +70,9 @@ public class ApiCallExample {
 		//response = connector.groupSvc().create("<templateName>", "<parentid>", "<groupName>", "<description>");
 		//response = connector.groupSvc().removeByIds(null, "<groupid>");
 		//response = connector.groupSvc().removeByNames(null, "<groupname>");
+		
+		//response = connector.groupSvc().updateGroup("<groupid>", "<groupname>", "<domain>", "<desc>" ,"<customProperties>");
+		//response = connector.groupSvc().changeParentGroup("<groupid>", "<parentId>", "<removeNonExclusive>");
 		
 		//Map<String, List<String>> groupUsersMap = new HashMap<String, List<String>>();
 		//List<String> list = new ArrayList<String>();
@@ -81,9 +92,20 @@ public class ApiCallExample {
 		//response = connector.groupSvc().addRemoveGroupAndMembers(groupUsersMap, RolesEnum.STUDENT, "remove");
 		
 		
-		System.out.println(response);
+		//report svc
+		//response = connector.reportSvc().listCourseSessionMembers(null, null, null, null, null, null, null, null, null, null, null, null, null);
+		
+		/*Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DATE, 1);
+		cal.set(Calendar.MONTH, Calendar.FEBRUARY);
+		cal.set(Calendar.YEAR, 2017);
+		
+		response = connector.reportSvc().listProgramMembers(null, null, null, null, null, null, 
+				null, new Date(cal.getTimeInMillis()), null, null, null, null, null);
+		*/
 		
 		/*
+		//Pagination sample
 		PagedList pagination = new PagedList();
 		pagination.setPageSize(5);
 		pagination.setCurrPage(2);
@@ -99,6 +121,8 @@ public class ApiCallExample {
 		response = connector.getUserList(null, null, false, null, pagination);
 		System.out.println(response);
 		*/
+		
+		System.out.println(response);
 	}	
 
 }

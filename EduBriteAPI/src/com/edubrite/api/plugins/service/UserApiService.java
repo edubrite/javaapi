@@ -39,9 +39,12 @@ public interface UserApiService {
 	 *            last name for the new user
 	 * @param siteRole
 	 *            role for the new user in the site
+	 * @param customProperties
+	 *            custom properties map
 	 * @return response string
 	 */
-	public String create(String userName, String password, String email, String firstName, String lastName);
+	public String create(String userName, String password, String email, String firstName, String lastName,
+			Map<String, String> customProperties);
 
 	/**
 	 * Get a specific user by userName

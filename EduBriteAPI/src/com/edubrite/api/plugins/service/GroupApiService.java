@@ -3,6 +3,7 @@ package com.edubrite.api.plugins.service;
 import java.util.List;
 import java.util.Map;
 
+import com.edubrite.api.plugins.staticdata.GroupMembershipTypeEnum;
 import com.edubrite.api.plugins.staticdata.RolesEnum;
 import com.edubrite.api.plugins.vo.PagedList;
 
@@ -118,5 +119,26 @@ public interface GroupApiService {
 	 * @return response string
 	 */
 	public String addRemoveGroupAndMembers(Map<String, List<String>> groupUsersMap, RolesEnum role, String addMemberOperation);
+
+	/**
+	 * Updated group details
+	 * @param groupId id of the group to update
+	 * @param groupName new/updated name 
+	 * @param domain new/updated domain
+	 * @param description new/updated description
+	 * @param customProperties new/updated custom properties
+	 * @return response string
+	 */
+	public String update(String groupId, String groupName, String domain, String description,
+			Map<String, String> customProperties);
+
+	/**
+	 * 
+	 * @param groupId
+	 * @param parentId
+	 * @param removeNonExclusive
+	 * @return response string
+	 */
+	public String changeParentGroup(String groupId, String parentId, Boolean removeNonExclusive);
 	
 }

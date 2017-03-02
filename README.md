@@ -1,5 +1,8 @@
 
+<p align="center">
 <img src="https://www.edubrite.com/oltpublish/static/assets/eb-img/eb-new-logo.png" width="256">
+</p>
+
 javaapi
 =======
 
@@ -85,6 +88,112 @@ Calling API
     ```
     String response = connector.userSvc().get("<username>");
     ```
+
+Response Types
+-----------
+
+Response can be fetched in following types :
+
+<table>
+<tr><td><b>XML</b></td><td>default</td><td>connector.setResponseType( ResponseType.<b>XML</b> );</td></tr>
+<tr><td><b>JSON</b></td><td></td><td>connector.setResponseType( ResponseType.<b>JSON</b> );</td></tr>
+</table>
+
+API Mapping
+-----------
+
+<table>
+<tr><th>Service</th><th>Operations</th></tr>
+<tr>
+<td>
+<b>UserApiService</b>
+<br/><i>[connector.userSvc()]</i>
+</td>
+<td>
+<ul>
+<li>list :  <i>List the users based on given criteria from given group</i></li>
+<li>create :  <i>Creates a new user</i></li>
+<li>get :  <i>Get a specific user by user name</i></li>
+<li>update :  <i>Updates user details</i></li>
+<li>deactivate :  <i>Deactivates user from the site</i></li>
+<li>activate :  <i>Activates deactivated user from the site</i></li>
+<li>addToGroups :  <i>Adds a user to group(s) with given role</i></li>
+<li>removeFromGroups : <i>Removes a user from group(s)</i></li>
+<li>getSession :  <i>Gets all user sessions</i></li>
+</ul>		
+</td>
+</tr>
+
+<tr>
+<td>
+<b>GroupApiService</b>
+<br/><i>[connector.groupSvc()]</i>
+</td>
+<td>
+<ul>
+<li>get :  <i>Fetches a group by given id</i></li>
+<li>getSiteGroupList :  <i>Fetches all the groups of the site</i></li>
+<li>getMyGroupList :  <i>Fetches user's groups</i></li>
+<li>create :  <i>Creates a new group</i></li>
+<li>removeByIds :  <i>Removes group(s) by given id(s)</i></li>
+<li>removeByNames :  <i>Removes group(s) by name(s)</i></li>
+<li>addRemoveGroupAndMembers :  <i>Adds/removes user into/from given group(s)</i></li>
+</ul>		
+</td>
+</tr>
+
+<tr>
+<td>
+<b>TestApiService</b>
+<br/><i>[connector.testSvc()]</i>
+</td>
+<td>
+<ul>
+<li>getTest</li>
+<li>getTestInstance</li>
+<li>getTestCollections</li>
+<li>getSubscribedExamsList</li>
+<li>getNotSubscribedExamsList</li>
+<li>subscribe</li>
+<li>getTestInstanceList</li>
+<li>getTestStats</li>
+<li>getTestQuestionStats</li>
+<li>getTestAttempts</li>
+<li>getAllTestAttempts</li>
+</ul>		
+</td>
+</tr>
+
+<tr>
+<td>
+<b>CourseApiService</b>
+<br/><i>[connector.courseSvc()]</i>
+</td>
+<td>
+<ul>
+<li>getCourseList</li>
+<li>getCourseSessionList</li>
+<li>getUsersCourseSessionList</li>
+<li>getSubscribedExamsList</li>
+<li>enrollCourseSession</li>
+</ul>		
+</td>
+</tr>
+
+<tr>
+<td>
+<b>ReportApiService</b>
+<br/><i>[connector.reportSvc()]</i>
+</td>
+<td>
+<ul>
+<li>listProgramMembers</li>
+<li>listCourseSessionMembers</li>
+</ul>		
+</td>
+</tr>
+</table>
+
 
 -----
 All source - copyright - EduBrite Systems Inc.

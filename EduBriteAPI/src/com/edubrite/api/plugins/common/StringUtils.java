@@ -1,7 +1,10 @@
 package com.edubrite.api.plugins.common;
 
 import java.net.URLEncoder;
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -262,5 +265,13 @@ public class StringUtils {
 	public static void main(String [] args){
 		String s = "  ####/sss/sss$$$ general \n  \t\t   \r knowledge ";
 		System.out.println(normalizeNonWordCharsAndSpacesExceptSlash(s));
+	}
+	
+	public static String dateToString(Date date) {
+		if (date != null) {
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			return dateFormat.format(date);
+		}
+		return null;
 	}
 }

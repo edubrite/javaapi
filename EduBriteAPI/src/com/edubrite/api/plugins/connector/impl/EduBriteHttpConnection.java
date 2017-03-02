@@ -1,3 +1,4 @@
+
 package com.edubrite.api.plugins.connector.impl;
 
 import java.io.ByteArrayInputStream;
@@ -386,7 +387,7 @@ public class EduBriteHttpConnection implements EduBriteConnection {
 			client.setState(initialState);
 			handleProxy();
 			method = new PostMethod(url);
-			
+			method.getParams().setContentCharset("utf-8");
 			User user = PluginConfigManager.getInstance().getApplicationUser();
 			String realName = null;
 			if(user != null){
