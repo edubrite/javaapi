@@ -93,17 +93,24 @@ public class ApiCallExample {
 		
 		
 		//report svc
-		//response = connector.reportSvc().listCourseSessionMembers(null, null, null, null, null, null, null, null, null, null, null, null, null);
 		
-		/*Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.DATE, 1);
-		cal.set(Calendar.MONTH, Calendar.FEBRUARY);
-		cal.set(Calendar.YEAR, 2017);
+		/*
+		Calendar from = Calendar.getInstance();
+		from.set(2017, Calendar.FEBRUARY, 1);
 		
-		response = connector.reportSvc().listProgramMembers(null, null, null, null, null, null, 
-				null, new Date(cal.getTimeInMillis()), null, null, null, null, null);
+		Calendar to = Calendar.getInstance();
+		to.set(2017, Calendar.APRIL, 1);
+		
+		String siteDateFormat = "dd/MM/yyyy hh:mm:ss";
 		*/
 		
+		//response = connector.reportSvc(siteDateFormat).listProgramMembers(null, null, null, null, null, null, 
+		//		new Date(from.getTimeInMillis()), new Date(to.getTimeInMillis()), 
+		//		null, null, null, null, null);
+		
+		//response = connector.reportSvc().listCourseSessionMembers(null, null, null, null, null, 
+		//		null, null, null, null, null, null, null, null);
+
 		/*
 		//Pagination sample
 		PagedList pagination = new PagedList();
