@@ -183,7 +183,7 @@ API Mapping
 <tr>
 <td>
 <b>ReportApiService</b>
-<br/><i>[connector.reportSvc()]</i>
+<br/><i>[connector.reportSvc(siteDateFormat)]</i>
 </td>
 <td>
 <ul>
