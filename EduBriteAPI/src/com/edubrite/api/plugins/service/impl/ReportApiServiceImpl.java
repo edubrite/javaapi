@@ -12,8 +12,11 @@ import com.edubrite.api.plugins.vo.PagedList;
 
 public class ReportApiServiceImpl extends AbstractApiService implements ReportApiService {
 
-	public ReportApiServiceImpl(EduBriteRemoteConnector eduBriteRemoteConnector) {
+	private final String DATE_FORMAT;
+	
+	public ReportApiServiceImpl(EduBriteRemoteConnector eduBriteRemoteConnector, String dateFormat) {
 		connector = eduBriteRemoteConnector;
+		this.DATE_FORMAT = dateFormat;
 	}
 
 	/**
@@ -70,10 +73,10 @@ public class ReportApiServiceImpl extends AbstractApiService implements ReportAp
 			parameters.put("started", String.valueOf(started));
 		}
 		parameters.put("userNameSearch", userNameSearch);
-		parameters.put("fromDate", StringUtils.dateToString(fromDate));
-		parameters.put("toDate", StringUtils.dateToString(toDate));
-		parameters.put("awardFromDate", StringUtils.dateToString(awardFromDate));
-		parameters.put("awardToDate", StringUtils.dateToString(awardToDate));
+		parameters.put("fromDate", StringUtils.dateToString(fromDate, DATE_FORMAT));
+		parameters.put("toDate", StringUtils.dateToString(toDate, DATE_FORMAT));
+		parameters.put("awardFromDate", StringUtils.dateToString(awardFromDate, DATE_FORMAT));
+		parameters.put("awardToDate", StringUtils.dateToString(awardToDate, DATE_FORMAT));
 
 		addPagination(pagination, parameters);
 		String response = connector.invokeApi("reportService.do", parameters);
@@ -133,12 +136,12 @@ public class ReportApiServiceImpl extends AbstractApiService implements ReportAp
 			parameters.put("status", status.toString());
 		}
 		parameters.put("userNameSearch", userNameSearch);
-		parameters.put("fromDate", StringUtils.dateToString(fromDate));
-		parameters.put("toDate", StringUtils.dateToString(toDate));
-		parameters.put("compFromDate", StringUtils.dateToString(compFromDate));
-		parameters.put("compToDate", StringUtils.dateToString(compToDate));
-		parameters.put("expFromDate", StringUtils.dateToString(expFromDate));
-		parameters.put("expToDate", StringUtils.dateToString(expToDate));
+		parameters.put("fromDate", StringUtils.dateToString(fromDate, DATE_FORMAT));
+		parameters.put("toDate", StringUtils.dateToString(toDate, DATE_FORMAT));
+		parameters.put("compFromDate", StringUtils.dateToString(compFromDate, DATE_FORMAT));
+		parameters.put("compToDate", StringUtils.dateToString(compToDate, DATE_FORMAT));
+		parameters.put("expFromDate", StringUtils.dateToString(expFromDate, DATE_FORMAT));
+		parameters.put("expToDate", StringUtils.dateToString(expToDate, DATE_FORMAT));
 
 		addPagination(pagination, parameters);
 		String response = connector.invokeApi("reportService.do", parameters);

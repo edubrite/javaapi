@@ -177,7 +177,7 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	 * Report specific services
 	 */
 	@Override
-	public ReportApiService reportSvc() {
-		return new ReportApiServiceImpl(this);
+	public ReportApiService reportSvc(String dateFormat) {
+		return new ReportApiServiceImpl(this, dateFormat);
 	}
 }

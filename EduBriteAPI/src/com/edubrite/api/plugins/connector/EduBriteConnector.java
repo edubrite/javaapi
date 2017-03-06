@@ -23,6 +23,6 @@ public interface EduBriteConnector {
 	public GroupApiService groupSvc();
 	public TestApiService testSvc();
 	public CourseApiService courseSvc();
-	public ReportApiService reportSvc();
+	public ReportApiService reportSvc(String dateFormat);
 	
 }

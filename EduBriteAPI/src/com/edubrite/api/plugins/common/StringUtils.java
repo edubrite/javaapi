@@ -267,9 +267,15 @@ public class StringUtils {
 		System.out.println(normalizeNonWordCharsAndSpacesExceptSlash(s));
 	}
 	
-	public static String dateToString(Date date) {
+	public static String dateToString(Date date, String format) {
 		if (date != null) {
-			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			String defaultDateFormat = "MM/dd/yyyy hh:mm:ss";
+			DateFormat dateFormat;
+			if(format!=null && !format.isEmpty()){
+				dateFormat = new SimpleDateFormat(format);
+			}else{
+				dateFormat = new SimpleDateFormat(defaultDateFormat);
+			}
 			return dateFormat.format(date);
 		}
 		return null;
