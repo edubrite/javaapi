@@ -26,21 +26,21 @@ Generate API keys
 
  1. `Login` to your micro-site and open  `Site Admin > Site Details` from the navigation.
 
-     <img src="https://github.com/edubrite/javaapi/blob/features/api-improvements/Readme/1.jpg">
+     <img src="https://github.com/edubrite/javaapi/blob/master/Readme/1.jpg">
 
  2. Visit `Integration` tab and click on `Generate Encryption Keys` (if not already generated) 
 
-    <img src="https://github.com/edubrite/javaapi/blob/features/api-improvements/Readme/2.jpg">
+    <img src="https://github.com/edubrite/javaapi/blob/master/Readme/2.jpg">
 
  3. Then click on `Generate Api Key`. This will generate username/password.
 
-    <img src="https://github.com/edubrite/javaapi/blob/features/api-improvements/Readme/3.1.jpg">
+    <img src="https://github.com/edubrite/javaapi/blob/master/Readme/3.1.jpg">
 
-    <img src="https://github.com/edubrite/javaapi/blob/features/api-improvements/Readme/3.2.jpg">
+    <img src="https://github.com/edubrite/javaapi/blob/master/Readme/3.2.jpg">
 
  4. Disable `API Encryption` and click `Save`
 
-    <img src="https://github.com/edubrite/javaapi/blob/features/api-improvements/Readme/4.1.jpg">
+    <img src="https://github.com/edubrite/javaapi/blob/master/Readme/4.1.jpg">
 
 
 -----
