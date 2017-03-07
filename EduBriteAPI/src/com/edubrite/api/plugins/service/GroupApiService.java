@@ -3,7 +3,6 @@ package com.edubrite.api.plugins.service;
 import java.util.List;
 import java.util.Map;
 
-import com.edubrite.api.plugins.staticdata.GroupMembershipTypeEnum;
 import com.edubrite.api.plugins.staticdata.RolesEnum;
 import com.edubrite.api.plugins.vo.PagedList;
 
@@ -29,7 +28,7 @@ public interface GroupApiService {
 	 *            pagination
 	 * @return response string
 	 */
-	public String getSiteGroupList(String parentId, String groupNamePattern, PagedList pagination);
+	public String list(String parentId, String groupNamePattern, PagedList pagination);
 	
 	/**
 	 * Fetches user's groups

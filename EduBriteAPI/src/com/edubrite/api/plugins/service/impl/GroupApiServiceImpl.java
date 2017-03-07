@@ -10,7 +10,6 @@ import org.apache.log4j.Logger;
 import com.edubrite.api.plugins.common.StringUtils;
 import com.edubrite.api.plugins.connector.impl.EduBriteRemoteConnector;
 import com.edubrite.api.plugins.service.GroupApiService;
-import com.edubrite.api.plugins.staticdata.GroupMembershipTypeEnum;
 import com.edubrite.api.plugins.staticdata.RolesEnum;
 import com.edubrite.api.plugins.vo.PagedList;
 
@@ -56,10 +55,10 @@ public class GroupApiServiceImpl extends AbstractApiService implements GroupApiS
 	 * @return response string
 	 */
 	@Override
-	public String getSiteGroupList(String parentId, String groupNamePattern, PagedList pagination) {
+	public String list(String parentId, String groupNamePattern, PagedList pagination) {
 		connector.ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("dispatch", "listSiteGroups");
+		parameters.put("dispatch", "list");
 		parameters.put("xml", String.valueOf(true));
 		if (!StringUtils.isBlankNull(parentId)) {
 			parameters.put("parentId", parentId);

@@ -48,7 +48,7 @@ public class UserApiServiceImpl extends AbstractApiService implements UserApiSer
 		parameters.put("email", email);
 
 		if (!StringUtils.isBlankNull(password)) {
-			parameters.put("parentId", password);
+			parameters.put("password", password);
 		}
 
 		if (customProperties != null && !customProperties.isEmpty()) {
