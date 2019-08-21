@@ -14,11 +14,15 @@ import com.edubrite.api.plugins.connector.EduBriteConnection;
 import com.edubrite.api.plugins.connector.EduBriteConnector;
 import com.edubrite.api.plugins.service.CourseApiService;
 import com.edubrite.api.plugins.service.GroupApiService;
+import com.edubrite.api.plugins.service.MetadataApiService;
+import com.edubrite.api.plugins.service.OpenLearnApiService;
 import com.edubrite.api.plugins.service.ReportApiService;
 import com.edubrite.api.plugins.service.TestApiService;
 import com.edubrite.api.plugins.service.UserApiService;
 import com.edubrite.api.plugins.service.impl.CourseApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.GroupApiServiceImpl;
+import com.edubrite.api.plugins.service.impl.MetadataApiServiceImpl;
+import com.edubrite.api.plugins.service.impl.OpenLearnApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.ReportApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.TestApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.UserApiServiceImpl;
@@ -171,6 +175,22 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	@Override
 	public CourseApiService courseSvc() {
 		return new CourseApiServiceImpl(this);
+	}
+	
+	/**
+	 * Openlearning specific services
+	 */
+	@Override
+	public OpenLearnApiService openlearnSvc() {
+		return new OpenLearnApiServiceImpl(this);
+	}
+	
+	/**
+	 * Metadata specific services
+	 */
+	@Override
+	public MetadataApiService metadataSvc() {
+		return new MetadataApiServiceImpl(this);
 	}
 	
 	/**

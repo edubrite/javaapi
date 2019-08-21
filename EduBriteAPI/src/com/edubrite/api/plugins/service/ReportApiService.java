@@ -89,5 +89,70 @@ public interface ReportApiService {
 	public String listCourseSessionMembers(String userId, String openId, String courseId, String courseSessionId,
 			String groupId, Boolean awarded, Boolean started, String userNameSearch, Date fromDate, Date toDate,
 			Date awardFromDate, Date awardToDate, PagedList pagination);
-
+	
+	/**
+	 * This API return enrollment count of course, either enrolled or completed
+	 * 
+	 * @param fromDate
+	 * 			start date (null for current month and year)
+	 * @param period      
+	 * 			to enable date range
+	 * @param toDate     
+	 * 			end date of range if period enabled
+	 * @param completed   
+	 * 			true: completed count, <br/>
+	 * 			false: enrolled count
+	 * @param notDistinct true: will return all enrollments of each user even if multiple, <br/>
+	 * 			false: return only one enrollement of a user
+	 * @param expand comma separated list of
+	 *		<ul>
+	 *			<li><strong>info</strong>: includes course info such as description, access, status etc</li>
+	 *			<li><strong>items</strong>: includes count of different type of items in the course such as lessons, tests, scorms etc.</li>
+	 *			<li><strong>logo</strong>: includes logo details of the course</li>
+	 *		</ul>
+	 * @param pagination  <br/>
+	 * 			sortColumn : <br/>
+	 * 				"1" - for name, <br/>
+	 * 				"2" - enrollment count <br/>
+	 * 				"3" - for course id, <br/>
+	 * 				"4" - completed count <br/>
+	 * 				(default: 2)
+	 * @return response string
+	 */
+	public String listCoursesEnrollmentsSummary(Date fromDate, boolean period, Date toDate, boolean completed, boolean notDistinct, String expand, PagedList pagination);
+	
+	/**
+	 * This API return enrollment count of program, either enrolled or completed
+	 * 
+	 * @param fromDate
+	 * 			start date (null for current month and year)
+	 * @param period      
+	 * 			to enable date range
+	 * @param toDate     
+	 * 			end date of range if period enabled
+	 * @param completed   
+	 * 			true: completed count, <br/>
+	 * 			false: enrolled count
+	 * @param notDistinct true: will return all enrollments of each user even if multiple, <br/>
+	 * 			false: return only one enrollement of a user
+	 * @param expand comma separated list of
+	 *       <ul>
+	 *			<li><strong>info</strong>: includes program info such as description, group name etc</li>
+	 *			<li><strong>credits</strong>: includes program credits&#39; details such as totla credits, min. credits etc.</li>
+	 *			<li><strong>logo</strong>: includes program&#39;s logo details</li>
+	 *			<li><strong>courses</strong>:<strong> </strong>includes program&#39;s courses count</li>
+	 *			<li><strong>badge</strong>: includes program&#39;s badge details</li>
+	 *			<li><strong>customProps</strong>: includes program&#39;s custom properties</li>
+	 *		</ul>
+	 * @param pagination  <br/>
+	 * 			sortColumn : <br/>
+	 * 				"1" - for name, <br/>
+	 * 				"2" - enrollment count <br/>
+	 * 				"3" - for course id, <br/>
+	 * 				"4" - completed count <br/>
+	 * 				(default: 2)
+	 * @return response string
+	 */
+	public String listProgramsEnrollmentsSummary(Date fromDate, boolean period, Date toDate, boolean completed, boolean notDistinct, String expand, PagedList pagination);
+	
 }

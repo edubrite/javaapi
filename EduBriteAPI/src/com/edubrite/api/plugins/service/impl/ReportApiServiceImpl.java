@@ -151,5 +151,71 @@ public class ReportApiServiceImpl extends AbstractApiService implements ReportAp
 			return null;
 		}
 	}
+	
+	@Override
+	public String listCoursesEnrollmentsSummary(Date fromDate, boolean period, Date toDate, boolean completed, boolean notDistinct, String expand, PagedList pagination) {
+		connector.ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "listCoursesEnrollmentsSummary");
+
+		if(fromDate!=null) {
+			parameters.put("fromDate", StringUtils.dateToString(fromDate, DATE_FORMAT));
+		}
+		if(period) {
+			parameters.put("period","on");
+			parameters.put("toDate", StringUtils.dateToString(toDate, DATE_FORMAT));
+		}
+		if(completed) {
+			parameters.put("getcompleted","true");
+		}
+		if(notDistinct) {
+			parameters.put("notDistinct","on");
+		}
+		if(!StringUtils.isBlankNull(expand)) {
+			parameters.put("expand",expand);
+		}
+		
+		addPagination(pagination, parameters);
+		
+		String response = connector.invokeApi("reportService.do", parameters);
+		if (!connector.hasError()) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	@Override
+	public String listProgramsEnrollmentsSummary(Date fromDate, boolean period, Date toDate, boolean completed, boolean notDistinct, String expand, PagedList pagination) {
+		connector.ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "listProgramsEnrollmentsSummary");
+		
+		if(fromDate!=null) {
+			parameters.put("fromDate", StringUtils.dateToString(fromDate, DATE_FORMAT));
+		}
+		if(period) {
+			parameters.put("period","on");
+			parameters.put("toDate", StringUtils.dateToString(toDate, DATE_FORMAT));
+		}
+		if(completed) {
+			parameters.put("getcompleted","true");
+		}
+		if(notDistinct) {
+			parameters.put("notDistinct","on");
+		}
+		if(!StringUtils.isBlankNull(expand)) {
+			parameters.put("expand",expand);
+		}
+		
+		addPagination(pagination, parameters);
+		
+		String response = connector.invokeApi("reportService.do", parameters);
+		if (!connector.hasError()) {
+			return response;
+		} else {
+			return null;
+		}
+	}
 
 }
