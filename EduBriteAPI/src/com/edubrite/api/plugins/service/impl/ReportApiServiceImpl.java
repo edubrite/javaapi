@@ -73,6 +73,12 @@ public class ReportApiServiceImpl extends AbstractApiService implements ReportAp
 			parameters.put("started", String.valueOf(started));
 		}
 		parameters.put("userNameSearch", userNameSearch);
+		
+	    if (customPropertiesSearch != null && !customPropertiesSearch.isEmpty()) {
+			for (Map.Entry<String, String> entry : customPropertiesSearch.entrySet()) {
+				parameters.put("customPropertyMap['" + entry.getKey() + "']", entry.getValue());
+			}
+		}
 		parameters.put("fromDate", StringUtils.dateToString(fromDate, DATE_FORMAT));
 		parameters.put("toDate", StringUtils.dateToString(toDate, DATE_FORMAT));
 		parameters.put("awardFromDate", StringUtils.dateToString(awardFromDate, DATE_FORMAT));
