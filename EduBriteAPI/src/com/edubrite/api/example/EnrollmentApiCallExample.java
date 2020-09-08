@@ -37,10 +37,8 @@ public class EnrollmentApiCallExample {
 		String response = null;
 		
 		// code till here is common. Setting up authentication & createing secure connection
-		
+		//Uncomment as necessary for testing
 		// ****************************************************************************************** //
-
-		
 		//1. Update event subscription
 		
 		Map<String, String> customProperties = new HashMap<String, String>();
