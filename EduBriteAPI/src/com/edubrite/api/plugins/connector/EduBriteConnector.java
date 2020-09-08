@@ -2,6 +2,7 @@ package com.edubrite.api.plugins.connector;
 
 import com.edubrite.api.plugins.common.Pair;
 import com.edubrite.api.plugins.service.CourseApiService;
+import com.edubrite.api.plugins.service.EventSubscriptionService;
 import com.edubrite.api.plugins.service.GroupApiService;
 import com.edubrite.api.plugins.service.MetadataApiService;
 import com.edubrite.api.plugins.service.OpenLearnApiService;
@@ -28,5 +29,6 @@ public interface EduBriteConnector {
 	public ReportApiService reportSvc(String dateFormat);
 	public OpenLearnApiService openlearnSvc();
 	public MetadataApiService metadataSvc();
+	public EventSubscriptionService evSubSvc();
 	
 }

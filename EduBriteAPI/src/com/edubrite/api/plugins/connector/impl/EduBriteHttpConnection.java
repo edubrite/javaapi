@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.net.ssl.SSLContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -66,6 +67,7 @@ public class EduBriteHttpConnection implements EduBriteConnection {
 	private HttpClient client = new HttpClient();
 	
 	public EduBriteHttpConnection(String url, String userName, String password) {
+		
 		URL urlO = null;
 		try {
 			urlO = new URL(url.trim());
@@ -226,7 +228,7 @@ public class EduBriteHttpConnection implements EduBriteConnection {
 	
 	private synchronized boolean connectInternal(){
 		PluginConfig config = PluginConfigManager.getConfig();
-		String url = "http://" + host + getPortStr()
+		String url = "https://" + host + getPortStr()
 				+ "/oltpublish/site/signin.do";
 		
 		log.debug("**** Connect :"+url+", "+userName+", "+password);
@@ -238,7 +240,7 @@ public class EduBriteHttpConnection implements EduBriteConnection {
 		try {
 			int code = 0;
 			
-			url = "http://" + host + getPortStr() + "/oltpublish/site/home.do";
+			url = "https://" + host + getPortStr() + "/oltpublish/site/home.do";
 			
 			method0 = new GetMethod(url);
 			code = client.executeMethod(method0);
@@ -358,7 +360,7 @@ public class EduBriteHttpConnection implements EduBriteConnection {
 	}
 	
 	private String getApiUrl(String uri){
-		return "http://" + host + getPortStr() + "/oltpublish/site/"
+		return "https://" + host + getPortStr() + "/oltpublish/site/"
 		+ uri;
 	}
 	

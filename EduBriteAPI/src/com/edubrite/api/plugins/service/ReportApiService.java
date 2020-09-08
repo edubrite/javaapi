@@ -1,6 +1,7 @@
 package com.edubrite.api.plugins.service;
 
 import java.util.Date;
+import java.util.Map;
 
 import com.edubrite.api.plugins.staticdata.ProgramStatus;
 import com.edubrite.api.plugins.vo.PagedList;
@@ -44,7 +45,7 @@ public interface ReportApiService {
 	 * @return response string
 	 */
 	public String listProgramMembers(String userId, String openId, String programId, String child0Id,
-			ProgramStatus status, String userNameSearch, Date fromDate, Date toDate, Date compFromDate, Date compToDate,
+			ProgramStatus status, String userNameSearch,  Date fromDate, Date toDate, Date compFromDate, Date compToDate,
 			Date expFromDate, Date expToDate, PagedList pagination);
 
 	/**
@@ -87,7 +88,7 @@ public interface ReportApiService {
 	 * @return response string
 	 */
 	public String listCourseSessionMembers(String userId, String openId, String courseId, String courseSessionId,
-			String groupId, Boolean awarded, Boolean started, String userNameSearch, Date fromDate, Date toDate,
+			String groupId, Boolean awarded, Boolean started, String userNameSearch, Map<String, String> customPropertiesSearch, Date fromDate, Date toDate,
 			Date awardFromDate, Date awardToDate, PagedList pagination);
 	
 	/**
@@ -154,5 +155,12 @@ public interface ReportApiService {
 	 * @return response string
 	 */
 	public String listProgramsEnrollmentsSummary(Date fromDate, boolean period, Date toDate, boolean completed, boolean notDistinct, String expand, PagedList pagination);
+	
+	/**
+	 * For completed documentation of parameter 
+	 * @param eventId
+	 * @return
+	 */
+	public String listEventParticipants(String eventId, boolean fetchCustomProps);
 	
 }

@@ -13,6 +13,7 @@ import com.edubrite.api.plugins.connector.CommunicationError;
 import com.edubrite.api.plugins.connector.EduBriteConnection;
 import com.edubrite.api.plugins.connector.EduBriteConnector;
 import com.edubrite.api.plugins.service.CourseApiService;
+import com.edubrite.api.plugins.service.EventSubscriptionService;
 import com.edubrite.api.plugins.service.GroupApiService;
 import com.edubrite.api.plugins.service.MetadataApiService;
 import com.edubrite.api.plugins.service.OpenLearnApiService;
@@ -20,6 +21,7 @@ import com.edubrite.api.plugins.service.ReportApiService;
 import com.edubrite.api.plugins.service.TestApiService;
 import com.edubrite.api.plugins.service.UserApiService;
 import com.edubrite.api.plugins.service.impl.CourseApiServiceImpl;
+import com.edubrite.api.plugins.service.impl.EventSubscriptionServiceImpl;
 import com.edubrite.api.plugins.service.impl.GroupApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.MetadataApiServiceImpl;
 import com.edubrite.api.plugins.service.impl.OpenLearnApiServiceImpl;
@@ -199,5 +201,13 @@ public class EduBriteRemoteConnector implements EduBriteConnector {
 	@Override
 	public ReportApiService reportSvc(String dateFormat) {
 		return new ReportApiServiceImpl(this, dateFormat);
+	}
+	
+	/**
+	 * EventSubscription services 
+	 */
+	@Override
+	public EventSubscriptionService evSubSvc() {
+		return new EventSubscriptionServiceImpl(this);
 	}
 }

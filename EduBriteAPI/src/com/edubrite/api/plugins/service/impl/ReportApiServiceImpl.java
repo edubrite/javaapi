@@ -54,7 +54,7 @@ public class ReportApiServiceImpl extends AbstractApiService implements ReportAp
 	 */
 	@Override
 	public String listCourseSessionMembers(String userId, String openId, String courseId, String courseSessionId,
-			String groupId, Boolean awarded, Boolean started, String userNameSearch, Date fromDate, Date toDate,
+			String groupId, Boolean awarded, Boolean started, String userNameSearch, Map<String, String> customPropertiesSearch, Date fromDate, Date toDate,
 			Date awardFromDate, Date awardToDate, PagedList pagination) {
 		connector.ensureConnection();
 		Map<String, String> parameters = new HashMap<String, String>();
@@ -209,6 +209,22 @@ public class ReportApiServiceImpl extends AbstractApiService implements ReportAp
 		}
 		
 		addPagination(pagination, parameters);
+		
+		String response = connector.invokeApi("reportService.do", parameters);
+		if (!connector.hasError()) {
+			return response;
+		} else {
+			return null;
+		}
+	}
+	
+	
+	public String listEventParticipants(String eventId, boolean fetchCustomProps) {
+		connector.ensureConnection();
+		Map<String, String> parameters = new HashMap<String, String>();
+		parameters.put("dispatch", "listEventParticipants");
+		parameters.put("eventId", eventId);
+		parameters.put("fetchCustomProps", "true");
 		
 		String response = connector.invokeApi("reportService.do", parameters);
 		if (!connector.hasError()) {
